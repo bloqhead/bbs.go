@@ -12,6 +12,8 @@ import (
 	"strings"
 	"time"
 	"bufio"
+	"context"
+	"os/signal"
 )
 
 // utility function for handling errors
@@ -28,6 +30,20 @@ type ClientJob struct {
 	conn net.Conn
 }
 
+type User struct {
+	username string
+	password string
+}
+
+func createAccount(username string, password string) {
+}
+
+func login(username string, password string) {
+}
+
+func logout() {
+}
+
 func generateResponses(clientJobs chan ClientJob) {
 	for {
 		clientJob := <-clientJobs
@@ -37,11 +53,15 @@ func generateResponses(clientJobs chan ClientJob) {
 
 		// if the user logs out, we give them a response
 		if strings.Compare("logout", clientJob.cmd) == 0 {
-			clientJob.conn.Write([]byte("Bye!"))
+			// say goodbye!
+			clientJob.conn.Write([]byte("Bye!\n"))
+
+			// and close the connection
+			clientJob.conn.Close()
 			break
 		} else {
 			// otherwise we pass the command along and output it for testing purposes
-			fmt.Printf(clientJob.cmd)
+			fmt.Printf("%s\n", clientJob.cmd)
 			clientJob.conn.Write([]byte(clientJob.cmd))
 		}
 	}
@@ -64,36 +84,39 @@ func main() {
 	check(err, "Server ready!")
 
 	// this is an anonymouse goroutine
-	for {
-		conn, err := ln.Accept()
+	conn, err := ln.Accept()
 
-		check(err, "Accepted connection!")
+	check(err, "Accepted connection!\n")
 
-		go func() {
-			buf := bufio.NewReader(conn)
+	go func() {
+		buf := bufio.NewReader(conn)
 
-			// this is using old school ANSI escape sequences
-			conn.Write([]byte("\033[H\033[2J"))
-			conn.Write([]byte("\033[33m"))
-			conn.Write([]byte("welcome to the BBS!"))
+		// we can pass our ANSI logo straight in here
+		conn.Write([]byte(logo))
 
-			// we can pass our ANSI logo straight in here
-			conn.Write([]byte(logo))
+		// this is using old school ANSI escape sequences
+		conn.Write([]byte("\033[H\033[2J"))
+		conn.Write([]byte("\033[33m"))
+		conn.Write([]byte("welcome to the BBS!\n"))
 
-			for {
-				conn.Write([]byte(">"))
+		for {
+			conn.Write([]byte(">"))
 
-				cmd, err := buf.ReadString('\n')
-				cmd = strings.Replace(cmd, "\r\n", "", -1)
+			cmd, err := buf.ReadString('\n')
+			cmd = strings.Replace(cmd, "\r\n", "", -1)
 
-				if err != nil {
-					fmt.Printf("Client disconnected.\n")
-					break
-				}
-
-				// send our jobs
-				clientJobs <- ClientJob{cmd, conn}
+			if err != nil {
+				fmt.Printf("Client disconnected.\n")
+				break
 			}
-		}()
-	}
+
+			// send our jobs
+			clientJobs <- ClientJob{cmd, conn}
+		}
+	}()
+
+	// close the connection when we're done
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+	<-ctx.Done()
 }
