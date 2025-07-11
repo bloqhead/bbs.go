@@ -1,0 +1,178 @@
+/* Color Palette extracted from "The Naked Gun" Movie Poster */
+
+:root {
+  /* Primary Colors */
+  --sky-blue: #87CEEB;
+  --bright-magenta: #E91E63;
+  --deep-pink: #C2185B;
+  
+  /* Neutral Colors */
+  --charcoal-gray: #2C2C2C;
+  --medium-gray: #6B6B6B;
+  --light-gray: #A8A8A8;
+  --off-white: #F5F5F5;
+  --pure-white: #FFFFFF;
+  --pure-black: #000000;
+  
+  /* Accent Colors */
+  --flesh-tone: #F4C2A1;
+  --burgundy-red: #722F37;
+  --warm-brown: #8B4513;
+  
+  /* Semantic Colors */
+  --primary: var(--bright-magenta);
+  --secondary: var(--sky-blue);
+  --accent: var(--burgundy-red);
+  --background: var(--off-white);
+  --surface: var(--pure-white);
+  --text-primary: var(--charcoal-gray);
+  --text-secondary: var(--medium-gray);
+  --text-inverse: var(--pure-white);
+}
+
+/* Background Utility Classes */
+.bg-primary { background-color: var(--primary); }
+.bg-secondary { background-color: var(--secondary); }
+.bg-accent { background-color: var(--accent); }
+.bg-surface { background-color: var(--surface); }
+.bg-background { background-color: var(--background); }
+.bg-sky-blue { background-color: var(--sky-blue); }
+.bg-magenta { background-color: var(--bright-magenta); }
+.bg-charcoal { background-color: var(--charcoal-gray); }
+.bg-light-gray { background-color: var(--light-gray); }
+.bg-burgundy { background-color: var(--burgundy-red); }
+
+/* Text Color Utility Classes */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-inverse { color: var(--text-inverse); }
+.text-magenta { color: var(--bright-magenta); }
+.text-sky-blue { color: var(--sky-blue); }
+.text-burgundy { color: var(--burgundy-red); }
+.text-white { color: var(--pure-white); }
+.text-black { color: var(--pure-black); }
+
+/* Border Utility Classes */
+.border-primary { border-color: var(--primary); }
+.border-secondary { border-color: var(--secondary); }
+.border-accent { border-color: var(--accent); }
+.border-magenta { border-color: var(--bright-magenta); }
+.border-sky-blue { border-color: var(--sky-blue); }
+.border-gray { border-color: var(--medium-gray); }
+
+/* Button Utility Classes */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--text-inverse);
+  border: 2px solid var(--primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--deep-pink);
+  border-color: var(--deep-pink);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--text-primary);
+  border: 2px solid var(--secondary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--primary);
+  color: var(--text-inverse);
+}
+
+/* Card Utility Classes */
+.card {
+  background-color: var(--surface);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(44, 44, 44, 0.1);
+  padding: 1.5rem;
+}
+
+.card-accent {
+  background-color: var(--surface);
+  border-left: 4px solid var(--primary);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(44, 44, 44, 0.1);
+  padding: 1.5rem;
+}
+
+/* Gradient Utility Classes */
+.gradient-sky {
+  background: linear-gradient(135deg, var(--sky-blue), var(--pure-white));
+}
+
+.gradient-magenta {
+  background: linear-gradient(135deg, var(--bright-magenta), var(--deep-pink));
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, var(--sky-blue), var(--bright-magenta));
+}
+
+/* Shadow Utility Classes */
+.shadow-sm {
+  box-shadow: 0 1px 2px rgba(44, 44, 44, 0.1);
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(44, 44, 44, 0.1);
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px rgba(44, 44, 44, 0.1);
+}
+
+.shadow-magenta {
+  box-shadow: 0 4px 20px rgba(233, 30, 99, 0.3);
+}
+
+/* Layout Utility Classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero-section {
+  background: var(--gradient-hero);
+  color: var(--text-inverse);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+/* Typography Enhancement Classes */
+.heading-primary {
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.heading-accent {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.text-muted {
+  color: var(--medium-gray);
+}

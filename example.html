@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Example</title>
+    <link rel="stylesheet" href="color-palette.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--background);
+        }
+        
+        .color-swatch {
+            width: 100px;
+            height: 60px;
+            border-radius: 0.375rem;
+            margin: 0.5rem;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .color-name {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        .section {
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="heading-primary" style="color: white; font-size: 3rem; margin-bottom: 1rem;">Color Palette Demo</h1>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem;">Extracted from "The Naked Gun" Movie Poster</p>
+            <button class="btn-outline" style="border-color: white; color: white;">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Color Swatches -->
+        <div class="section">
+            <h2 class="heading-primary" style="margin-bottom: 2rem;">Color Palette</h2>
+            
+            <h3 class="heading-accent" style="margin-bottom: 1rem;">Primary Colors</h3>
+            <div style="margin-bottom: 2rem;">
+                <div class="color-swatch bg-sky-blue">
+                    <div class="color-name">Sky Blue</div>
+                </div>
+                <div class="color-swatch bg-magenta">
+                    <div class="color-name">Bright Magenta</div>
+                </div>
+                <div class="color-swatch" style="background-color: var(--deep-pink);">
+                    <div class="color-name">Deep Pink</div>
+                </div>
+            </div>
+
+            <h3 class="heading-accent" style="margin-bottom: 1rem;">Neutral Colors</h3>
+            <div style="margin-bottom: 2rem;">
+                <div class="color-swatch bg-charcoal">
+                    <div class="color-name">Charcoal Gray</div>
+                </div>
+                <div class="color-swatch" style="background-color: var(--medium-gray);">
+                    <div class="color-name">Medium Gray</div>
+                </div>
+                <div class="color-swatch bg-light-gray">
+                    <div class="color-name">Light Gray</div>
+                </div>
+                <div class="color-swatch" style="background-color: var(--off-white); border: 1px solid var(--light-gray);">
+                    <div class="color-name">Off White</div>
+                </div>
+            </div>
+
+            <h3 class="heading-accent" style="margin-bottom: 1rem;">Accent Colors</h3>
+            <div style="margin-bottom: 2rem;">
+                <div class="color-swatch" style="background-color: var(--flesh-tone);">
+                    <div class="color-name">Flesh Tone</div>
+                </div>
+                <div class="color-swatch bg-burgundy">
+                    <div class="color-name">Burgundy Red</div>
+                </div>
+                <div class="color-swatch" style="background-color: var(--warm-brown);">
+                    <div class="color-name">Warm Brown</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button Examples -->
+        <div class="section">
+            <h2 class="heading-primary" style="margin-bottom: 2rem;">Button Components</h2>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn-primary">Primary Button</button>
+                <button class="btn-secondary">Secondary Button</button>
+                <button class="btn-outline">Outline Button</button>
+            </div>
+        </div>
+
+        <!-- Card Examples -->
+        <div class="section">
+            <h2 class="heading-primary" style="margin-bottom: 2rem;">Card Components</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="card">
+                    <h3 class="heading-accent" style="margin-bottom: 1rem;">Regular Card</h3>
+                    <p class="text-secondary">This is a regular card component using the extracted color palette. Perfect for content sections.</p>
+                </div>
+                
+                <div class="card-accent">
+                    <h3 class="text-magenta" style="margin-bottom: 1rem;">Accent Card</h3>
+                    <p class="text-secondary">This card features the bright magenta accent border, drawing attention to important content.</p>
+                </div>
+                
+                <div class="card gradient-sky" style="color: var(--text-primary);">
+                    <h3 style="margin-bottom: 1rem;">Gradient Card</h3>
+                    <p>This card uses the sky blue gradient background for a more dynamic appearance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typography Examples -->
+        <div class="section">
+            <h2 class="heading-primary" style="margin-bottom: 2rem;">Typography</h2>
+            <div class="card">
+                <h1 class="heading-primary" style="margin-bottom: 1rem;">Primary Heading</h1>
+                <h2 class="heading-accent" style="margin-bottom: 1rem;">Accent Heading</h2>
+                <p class="text-primary" style="margin-bottom: 1rem;">This is primary text using the charcoal gray color for excellent readability.</p>
+                <p class="text-secondary" style="margin-bottom: 1rem;">This is secondary text using a lighter gray for less emphasis.</p>
+                <p class="text-muted">This is muted text for additional information or footnotes.</p>
+            </div>
+        </div>
+
+        <!-- Background Examples -->
+        <div class="section">
+            <h2 class="heading-primary" style="margin-bottom: 2rem;">Background Utilities</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="bg-primary text-inverse" style="padding: 2rem; border-radius: 0.5rem; text-align: center;">
+                    <strong>Primary Background</strong>
+                </div>
+                <div class="bg-secondary text-primary" style="padding: 2rem; border-radius: 0.5rem; text-align: center;">
+                    <strong>Secondary Background</strong>
+                </div>
+                <div class="bg-accent text-inverse" style="padding: 2rem; border-radius: 0.5rem; text-align: center;">
+                    <strong>Accent Background</strong>
+                </div>
+                <div class="gradient-hero text-inverse" style="padding: 2rem; border-radius: 0.5rem; text-align: center;">
+                    <strong>Hero Gradient</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-inverse" style="margin-top: 4rem; padding: 2rem 0; text-align: center;">
+        <div class="container">
+            <p>&copy; 2024 Color Palette Demo. Colors extracted from movie poster imagery.</p>
+        </div>
+    </footer>
+</body>
+</html>
