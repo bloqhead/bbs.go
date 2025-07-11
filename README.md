@@ -45,16 +45,30 @@ The server will start on port 3003 and automatically create the SQLite database 
 
 ## Connecting to the BBS
 
-Use any telnet client to connect to the BBS:
+Use any telnet client or netcat to connect to the BBS:
 
 ```bash
+# Using telnet (recommended)
 telnet localhost 3003
+
+# Using netcat (nc) - if telnet is not available
+nc localhost 3003
 ```
 
-### Alternative telnet clients:
+### Client Options:
+- **telnet** (recommended): Best experience with proper line handling
+- **nc (netcat)**: Works well for systems without telnet
 - **Windows**: Use built-in telnet or PuTTY
-- **macOS/Linux**: Built-in telnet command
+- **macOS/Linux**: Built-in telnet command or nc
 - **Modern terminals**: Most terminal emulators support telnet
+
+### Troubleshooting Connection Issues:
+If you experience input issues with nc, try:
+```bash
+# For debug mode to see raw input
+./bbs debug
+# Then connect with: nc localhost 3004
+```
 
 ## Usage
 

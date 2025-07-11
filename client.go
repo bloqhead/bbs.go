@@ -15,15 +15,15 @@ type Client struct {
 	db           *Database
 	server       *BBSServer
 	authenticated bool
-	scanner      *bufio.Scanner
+	reader       *bufio.Reader
 }
 
 func NewClient(conn net.Conn, db *Database, server *BBSServer) *Client {
 	return &Client{
-		conn:    conn,
-		db:      db,
-		server:  server,
-		scanner: bufio.NewScanner(conn),
+		conn:   conn,
+		db:     db,
+		server: server,
+		reader: bufio.NewReader(conn),
 	}
 }
 
@@ -60,6 +60,20 @@ func (c *Client) Handle() {
 	c.commandLoop()
 }
 
+func (c *Client) readLine() (string, error) {
+	// Set a shorter read timeout for better responsiveness
+	c.conn.SetReadDeadline(time.Now().Add(10 * time.Second))
+	
+	line, err := c.reader.ReadString('\n')
+	if err != nil {
+		return "", err
+	}
+	
+	// Clean up the line - remove both \r\n and \n endings
+	line = strings.TrimRight(line, "\r\n")
+	return line, nil
+}
+
 func (c *Client) displayWelcome() {
 	// Display logo
 	if logo, err := readLogo(); err == nil {
@@ -68,17 +82,20 @@ func (c *Client) displayWelcome() {
 
 	// Clear screen and set color
 	c.write("\033[H\033[2J")
-	c.write("\033[33mWelcome to the Enhanced BBS!\033[0m\n\n")
+	c.write("\033[33mWelcome to the Enhanced BBS!\033[0m\n")
+	c.write("\033[36mSupports both telnet and nc (netcat) clients\033[0m\n\n")
 }
 
 func (c *Client) authenticate() bool {
 	for {
 		c.write("Do you want to (L)ogin or (R)egister? ")
-		if !c.scanner.Scan() {
+		
+		input, err := c.readLine()
+		if err != nil {
 			return false
 		}
 
-		choice := strings.ToLower(strings.TrimSpace(c.scanner.Text()))
+		choice := strings.ToLower(strings.TrimSpace(input))
 		switch choice {
 		case "l", "login":
 			if c.login() {
@@ -98,16 +115,18 @@ func (c *Client) authenticate() bool {
 
 func (c *Client) login() bool {
 	c.write("Username: ")
-	if !c.scanner.Scan() {
+	username, err := c.readLine()
+	if err != nil {
 		return false
 	}
-	username := strings.TrimSpace(c.scanner.Text())
+	username = strings.TrimSpace(username)
 
 	c.write("Password: ")
-	if !c.scanner.Scan() {
+	password, err := c.readLine()
+	if err != nil {
 		return false
 	}
-	password := strings.TrimSpace(c.scanner.Text())
+	password = strings.TrimSpace(password)
 
 	user, err := c.db.AuthenticateUser(username, password)
 	if err != nil {
@@ -123,10 +142,11 @@ func (c *Client) login() bool {
 
 func (c *Client) register() bool {
 	c.write("Choose a username: ")
-	if !c.scanner.Scan() {
+	username, err := c.readLine()
+	if err != nil {
 		return false
 	}
-	username := strings.TrimSpace(c.scanner.Text())
+	username = strings.TrimSpace(username)
 
 	if len(username) < 3 {
 		c.write("\033[31mUsername must be at least 3 characters long.\033[0m\n\n")
@@ -134,10 +154,11 @@ func (c *Client) register() bool {
 	}
 
 	c.write("Choose a password: ")
-	if !c.scanner.Scan() {
+	password, err := c.readLine()
+	if err != nil {
 		return false
 	}
-	password := strings.TrimSpace(c.scanner.Text())
+	password = strings.TrimSpace(password)
 
 	if len(password) < 4 {
 		c.write("\033[31mPassword must be at least 4 characters long.\033[0m\n\n")
@@ -199,11 +220,12 @@ func (c *Client) commandLoop() {
 	for {
 		c.write(fmt.Sprintf("\033[34m[%s]>\033[0m ", c.currentRoom.Name))
 		
-		if !c.scanner.Scan() {
+		input, err := c.readLine()
+		if err != nil {
 			break
 		}
 
-		input := strings.TrimSpace(c.scanner.Text())
+		input = strings.TrimSpace(input)
 		if input == "" {
 			continue
 		}
